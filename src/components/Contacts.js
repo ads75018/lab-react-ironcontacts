@@ -42,12 +42,25 @@ class Contacts extends React.Component {
     ],
   };
 
+  randomContact() {
+    let randomNumber = Math.floor(Math.random() * contacts.length);
+    return randomNumber;
+  }
+
   clickToAdd() {
     let contactsCopy = [...this.state.contacts]; //copy
-    contactsCopy.push(contacts[this.randomContact()]);
+
+    let contactToAdd = contacts[this.randomContact()];
+
+    while (contactsCopy.findIndex(contact => contact.id === contactToAdd.id) !== -1) {
+      contactToAdd = contacts[this.randomContact()];
+    }
+
+    contactsCopy.push(contactToAdd);
     this.setState({
       contacts: contactsCopy,
     });
+
   }
 
   clickToSortByName() {
@@ -84,11 +97,6 @@ class Contacts extends React.Component {
     this.setState({
       contacts: contactsCopy4
     })
-  }
-
-  randomContact() {
-    let randomNumber = Math.floor(Math.random() * contacts.length);
-    return randomNumber;
   }
 
   render() {
