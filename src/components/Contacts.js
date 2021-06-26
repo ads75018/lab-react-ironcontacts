@@ -1,4 +1,5 @@
 import React from 'react';
+import contacts from '../contacts.json';
 
 class Contacts extends React.Component {
   state = {
@@ -40,10 +41,25 @@ class Contacts extends React.Component {
       },
     ],
   };
+
+  clickToAdd(contact_Id) {
+    let contactsCopy = [...this.state.contacts] //copy
+    contactsCopy.push(contacts[this.randomContact()]);
+    this.setState({
+      contacts: contactsCopy
+    })
+  }
+
+  randomContact() {
+    let randomNumber = Math.floor(Math.random() * contacts.length)
+    return randomNumber;
+  }
+
   render() {
-    console.log(this.state.contacts);
+
     return (
       <>
+        <button onClick={() => this.clickToAdd(contacts[this.randomContact()].id)}>Add random contact</button>
 
         <table>
           <thead>
@@ -58,7 +74,7 @@ class Contacts extends React.Component {
             {this.state.contacts.map((contact, i) => (
               <tr key={contact.id}>
                 <td>
-                  <img src={contact.pictureUrl} />
+                  <img src={contact.pictureUrl} alt="avatar" />
                 </td>
                 <td>{contact.name}</td>
                 <td>{contact.popularity}</td>
