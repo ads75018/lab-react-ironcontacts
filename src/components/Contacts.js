@@ -42,24 +42,53 @@ class Contacts extends React.Component {
     ],
   };
 
-  clickToAdd(contact_Id) {
-    let contactsCopy = [...this.state.contacts] //copy
+  clickToAdd() {
+    let contactsCopy = [...this.state.contacts]; //copy
     contactsCopy.push(contacts[this.randomContact()]);
     this.setState({
-      contacts: contactsCopy
-    })
+      contacts: contactsCopy,
+    });
+  }
+
+  clickToSortByName() {
+    let contactsCopy2 = [...this.state.contacts];
+
+    contactsCopy2.sort((a, b) => a.name.localeCompare(b.name));
+
+    console.log(contactsCopy2);
+    this.setState({
+      contacts: contactsCopy2,
+    });
+  }
+
+  clickToSortByPopularity() {
+    let contactsCopy3 = [...this.state.contacts];
+
+    contactsCopy3.sort((a, b) => b.popularity - a.popularity);
+
+    console.log(contactsCopy3);
+    this.setState({
+      contacts: contactsCopy3,
+    });
   }
 
   randomContact() {
-    let randomNumber = Math.floor(Math.random() * contacts.length)
+    let randomNumber = Math.floor(Math.random() * contacts.length);
     return randomNumber;
   }
 
   render() {
-
     return (
       <>
-        <button onClick={() => this.clickToAdd(contacts[this.randomContact()].id)}>Add random contact</button>
+        <button
+          onClick={() => this.clickToAdd(contacts[this.randomContact()].id)}
+        >
+          Add random contact
+        </button>
+        <button onClick={() => this.clickToSortByName()}> Sort by name</button>
+        <button onClick={() => this.clickToSortByPopularity()}>
+          Sort by popularity
+        </button>
 
         <table>
           <thead>
