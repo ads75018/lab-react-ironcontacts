@@ -72,6 +72,20 @@ class Contacts extends React.Component {
     });
   }
 
+  clickToDelete(contactId) {
+
+    const contactToDeleteIndex = this.state.contacts.findIndex(contact => contact.id === contactId)
+    console.log("to delete:", contactToDeleteIndex)
+
+
+    let contactsCopy4 = [...this.state.contacts];
+    contactsCopy4.splice(contactToDeleteIndex, 1)
+
+    this.setState({
+      contacts: contactsCopy4
+    })
+  }
+
   randomContact() {
     let randomNumber = Math.floor(Math.random() * contacts.length);
     return randomNumber;
@@ -81,7 +95,7 @@ class Contacts extends React.Component {
     return (
       <>
         <button
-          onClick={() => this.clickToAdd(contacts[this.randomContact()].id)}
+          onClick={() => this.clickToAdd()}
         >
           Add random contact
         </button>
@@ -107,6 +121,7 @@ class Contacts extends React.Component {
                 </td>
                 <td>{contact.name}</td>
                 <td>{contact.popularity}</td>
+                <td><button onClick={() => this.clickToDelete(contact.id)}>Delete</button></td>
               </tr>
             ))}
           </tbody>
